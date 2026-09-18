@@ -178,17 +178,7 @@ canvas.addEventListener('pointermove',e=>{if(!drawing)return;const r=canvas.getB
 canvas.addEventListener('pointerup',()=>drawing=false);canvas.addEventListener('pointercancel',()=>drawing=false);
 resizeScratch();window.addEventListener('resize',resizeScratch);
 
-// Background celebration music
-const bgMusic=document.getElementById('bgMusic');
-const musicToggle=document.getElementById('musicToggle');
-let musicStarted=false;
-async function startMusic(){try{await bgMusic.play();musicStarted=true;if(musicToggle)musicToggle.textContent='♫ Celebration Music Playing';}catch(e){}}
-window.addEventListener('load',startMusic);
-document.addEventListener('click',()=>{if(!musicStarted)startMusic()},{once:true});
-document.addEventListener('touchstart',()=>{if(!musicStarted)startMusic()},{once:true,passive:true});
-document.addEventListener('keydown',()=>{if(!musicStarted)startMusic()},{once:true});
-if(musicToggle)musicToggle.addEventListener('click',startMusic);
-</script>
-<audio id="bgMusic" loop preload="auto" autoplay playsinline><source src="https://archive.org/download/khushiyan-da-wela-aya-sehra/Khushiyan%20Da%20Wela%20Aya%20Sehra.mp3" type="audio/mpeg"></audio>
+// Background music is provided by the embedded YouTube player above.\n</script>
+<iframe id="bgMusic" src="https://www.youtube.com/embed/0eSVgD2V2AQ?autoplay=1&loop=1&playlist=0eSVgD2V2AQ&controls=0&playsinline=1" title="Background music" allow="autoplay; encrypted-media" style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;border:0;bottom:0;left:0" aria-hidden="true"></iframe>
 </body></html>
 <!-- GitHub Pages deployment refresh: 1789768991740 -->
