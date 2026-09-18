@@ -26,6 +26,8 @@ section{padding:70px 0}.inner{padding:52px 28px;text-align:center}.heading{font-
 .closing{padding:80px 25px}.names{font-size:32px;letter-spacing:2px}.small{font:10px Montserrat,sans-serif;letter-spacing:3px;color:var(--soft)}footer{text-align:center;padding:65px 10px 35px;color:var(--soft);font-style:italic;font-size:18px}
 .flower{position:absolute;color:#c7aa86;opacity:.55;font-size:52px}.f1{left:22px;top:25px}.f2{right:22px;bottom:25px;transform:rotate(180deg)}
 @media(max-width:650px){.page{padding:10px}.hero .card{padding:60px 18px}.grid3{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}.inner{padding:40px 17px}.heading{font-size:39px}.script-title{font-size:42px}.intro{font-size:18px}.count{grid-template-columns:repeat(2,1fr)}.map iframe{height:290px}.step{grid-template-columns:58px 14px 1fr}.step h3{font-size:21px}}
+
+.scratch-wrap{max-width:600px;margin:36px auto 0}.scratch-card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:24px;background:#fbf4ec;min-height:210px;display:grid;place-items:center}.scratch-under{padding:28px}.scratch-under .secret-date{font-size:40px;color:var(--gold);margin:10px 0}.scratch-under .secret-note{font:10px Montserrat,sans-serif;letter-spacing:2px;color:var(--soft)}#scratchCanvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}.scratch-hint{font:11px Montserrat,sans-serif;letter-spacing:2px;color:var(--soft);margin-top:14px}.city-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}.city-item{padding:20px 10px;background:#fbf4ec;border:1px solid #e7d9ca;border-radius:18px}.city-item b{display:block;font-size:20px;font-weight:500;margin-top:7px}.city-item span{font:9px Montserrat,sans-serif;letter-spacing:1.5px;color:var(--soft)}@media(max-width:650px){.city-grid{grid-template-columns:repeat(2,1fr)}.scratch-under .secret-date{font-size:31px}}
 </style>
 </head>
 <body>
@@ -35,7 +37,13 @@ section{padding:70px 0}.inner{padding:52px 28px;text-align:center}.heading{font-
 <div class="orn">✦　❦　✦</div><div class="eyebrow">Together with their families</div>
 <h1>Muhammad Sufyan<br><span class="script">&amp;</span><br>Rukhsar Arshad</h1>
 <div class="sub">REQUEST THE PLEASURE OF YOUR COMPANY</div><div class="rule"></div>
-<div class="sub">FRIDAY · 30 OCTOBER · 2026</div>
+<div class="scratch-wrap">
+<div class="scratch-card">
+<div class="scratch-under"><div class="eyebrow">A little surprise</div><div class="secret-date">30 October 2026</div><div class="secret-note">SIALKOT · ENGAGEMENT DAY</div></div>
+<canvas id="scratchCanvas"></canvas>
+</div>
+<div class="scratch-hint">✦ SCRATCH THE GOLDEN VEIL TO REVEAL THE DATE ✦</div>
+</div>
 <p class="intro" style="margin-top:22px">With hearts full of happiness, we invite you to join us as we celebrate a beautiful new beginning.</p>
 <div class="btns"><a class="btn fill" href="#invitation">Explore Invitation</a><a class="btn" href="#location">View Location</a></div>
 </div></header>
@@ -64,6 +72,19 @@ section{padding:70px 0}.inner{padding:52px 28px;text-align:center}.heading{font-
 <div class="eyebrow">Please mark your calendar</div><h2 class="heading">Save the Date</h2>
 <div class="count"><div class="countbox"><div class="num" id="days">—</div><div class="lbl">DAYS</div></div><div class="countbox"><div class="num" id="hours">—</div><div class="lbl">HOURS</div></div><div class="countbox"><div class="num" id="mins">—</div><div class="lbl">MINUTES</div></div><div class="countbox"><div class="num" id="secs">—</div><div class="lbl">SECONDS</div></div></div>
 <p class="lead">30 October 2026 · Sialkot, Punjab, Pakistan</p>
+</div></section>
+
+<section><div class="card inner">
+<div class="eyebrow">About the destination</div><h2 class="heading">Sialkot</h2>
+<p class="lead">A beautiful city in Punjab, Pakistan, and the setting for our special celebration.</p>
+<div class="city-grid">
+<div class="city-item"><span>LOCATION</span><b>Punjab</b></div>
+<div class="city-item"><span>COUNTRY</span><b>Pakistan</b></div>
+<div class="city-item"><span>KNOWN AS</span><b>City of Iqbal</b></div>
+<div class="city-item"><span>AREA</span><b>Sialkot District</b></div>
+</div>
+<div class="rule"></div>
+<p class="small">Explore the city map below, then open Google Maps for directions.</p>
 </div></section>
 
 <section><div class="card inner">
@@ -96,5 +117,30 @@ section{padding:70px 0}.inner{padding:52px 28px;text-align:center}.heading{font-
 const target=new Date('2026-10-30T18:00:00+05:00').getTime();
 function tick(){let d=target-Date.now();if(d<0)d=0;document.getElementById('days').textContent=Math.floor(d/86400000);document.getElementById('hours').textContent=Math.floor(d/3600000)%24;document.getElementById('mins').textContent=Math.floor(d/60000)%60;document.getElementById('secs').textContent=Math.floor(d/1000)%60}
 tick();setInterval(tick,1000);
+
+// Scratch-to-reveal date
+const canvas=document.getElementById('scratchCanvas');
+const ctx=canvas.getContext('2d');
+let drawing=false, revealed=false;
+function resizeScratch(){
+  const r=canvas.getBoundingClientRect(), ratio=Math.max(1,window.devicePixelRatio||1);
+  canvas.width=r.width*ratio; canvas.height=r.height*ratio; ctx.setTransform(ratio,0,0,ratio,0,0);
+  const g=ctx.createLinearGradient(0,0,r.width,r.height); g.addColorStop(0,'#b28a5a'); g.addColorStop(.5,'#d8bd93'); g.addColorStop(1,'#9d7449');
+  ctx.fillStyle=g; ctx.fillRect(0,0,r.width,r.height);
+  ctx.fillStyle='rgba(255,250,244,.22)'; for(let i=0;i<90;i++){ctx.beginPath();ctx.arc(Math.random()*r.width,Math.random()*r.height,Math.random()*2+1,0,Math.PI*2);ctx.fill();}
+  ctx.globalCompositeOperation='destination-out';
+}
+function scratch(x,y){
+  ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.fill();
+  if(!revealed){
+    const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;let clear=0;
+    for(let i=3;i<data.length;i+=16) if(data[i]<80) clear++;
+    if(clear>canvas.width*canvas.height*.18){revealed=true;canvas.style.opacity='0';canvas.style.transition='opacity .6s';}
+  }
+}
+canvas.addEventListener('pointerdown',e=>{drawing=true;canvas.setPointerCapture(e.pointerId);const r=canvas.getBoundingClientRect();scratch(e.clientX-r.left,e.clientY-r.top)});
+canvas.addEventListener('pointermove',e=>{if(!drawing)return;const r=canvas.getBoundingClientRect();scratch(e.clientX-r.left,e.clientY-r.top)});
+canvas.addEventListener('pointerup',()=>drawing=false);canvas.addEventListener('pointercancel',()=>drawing=false);
+resizeScratch();window.addEventListener('resize',resizeScratch);
 </script>
 </body></html>
