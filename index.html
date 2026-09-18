@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="deployment" content="2026-09-19T02:00:00Z"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="deployment" content="2026-09-19T03:10:00Z"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f7efe5"><meta name="description" content="A long-form engagement invitation for Muhammad Sufyan and Rukhsar Arshad — 30 October 2026, Sialkot.">
 <title>Muhammad Sufyan & Rukhsar Arshad | Engagement</title>
 <style>
@@ -109,8 +109,7 @@ section{padding:70px 0}.inner{padding:52px 28px;text-align:center}.heading{font-
 <section><div class="card inner">
 <div class="eyebrow">A symbol of the promise ahead</div><h2 class="heading">Celebrating Two Hearts</h2>
 <p class="lead">A timeless, understated celebration inspired by warmth, family and the joy of beginning life’s next chapter together.</p>
-<div class="gallery" style="grid-template-columns:repeat(3,1fr)"><div class="portrait"><svg viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg"><rect width="500" height="620" fill="#e6d8c9"/><circle cx="250" cy="205" r="92" fill="#c2aa91"/><path d="M95 540c8-155 70-235 155-235s147 80 155 235" fill="#8b735f"/><path d="M155 190c5-92 180-118 206 6-47-39-130-49-206-6" fill="#5d5045"/><path d="M130 515h240v105H130z" fill="#a58b72"/></svg></div>
-<div class="portrait"><svg viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg"><rect width="500" height="620" fill="#efe5da"/><circle cx="250" cy="205" r="92" fill="#ccb49c"/><path d="M88 540c12-155 74-235 162-235s150 80 162 235" fill="#9c846e"/><path d="M145 196c12-103 185-112 211 10-60-43-143-50-211-10" fill="#746050"/><path d="M110 500c85 38 195 38 280 0v120H110z" fill="#826d5b"/></svg></div><div class="portrait ring-frame"><div class="ring-glow"></div><svg viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg"><rect width="500" height="620" fill="#f1e6d8"/><ellipse cx="250" cy="330" rx="132" ry="96" fill="none" stroke="#b28a5a" stroke-width="28"/><ellipse cx="250" cy="330" rx="96" ry="67" fill="#f1e6d8"/><path d="M205 225 L250 130 L295 225 L250 275 Z" fill="#fffaf4" stroke="#b28a5a" stroke-width="8"/><path d="M250 130 L282 195 L250 225 L218 195 Z" fill="#ffffff" opacity=".9"/><circle cx="250" cy="158" r="17" fill="#ffffff" opacity=".95"/><circle cx="210" cy="205" r="7" fill="#ffffff" opacity=".75"/><circle cx="290" cy="205" r="7" fill="#ffffff" opacity=".75"/></svg></div><div class="small" style="margin-top:18px">An artistic representation · ring artwork · ring illustration added as a symbol of the promise ahead</div>
+<div class="gallery" style="grid-template-columns:1fr;max-width:520px;margin-left:auto;margin-right:auto"><div class="portrait ring-frame"><div class="ring-glow"></div><svg viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg"><rect width="500" height="620" fill="#f1e6d8"/><ellipse cx="250" cy="350" rx="150" ry="110" fill="none" stroke="#b28a5a" stroke-width="30"/><ellipse cx="250" cy="350" rx="110" ry="78" fill="#f1e6d8"/><path d="M195 240 L250 125 L305 240 L250 300 Z" fill="#fffaf4" stroke="#b28a5a" stroke-width="9"/><path d="M250 125 L288 205 L250 240 L212 205 Z" fill="#ffffff" opacity=".95"/><circle cx="250" cy="155" r="19" fill="#ffffff"/><circle cx="208" cy="215" r="8" fill="#ffffff" opacity=".8"/><circle cx="292" cy="215" r="8" fill="#ffffff" opacity=".8"/></svg></div><div class="small" style="margin-top:18px">RING DETAIL · THE SYMBOL OF THE PROMISE AHEAD</div>
 </div></section>
 
 <section><div class="card inner">
@@ -189,8 +188,26 @@ canvas.addEventListener('pointerdown',e=>{drawing=true;canvas.setPointerCapture(
 canvas.addEventListener('pointermove',e=>{if(!drawing)return;const r=canvas.getBoundingClientRect();scratch(e.clientX-r.left,e.clientY-r.top)});
 canvas.addEventListener('pointerup',()=>drawing=false);canvas.addEventListener('pointercancel',()=>drawing=false);
 resizeScratch();window.addEventListener('resize',resizeScratch);
+
+// Celebration music: try autoplay on page load; browsers may block unmuted autoplay.
+// If blocked, the first tap/click/keypress starts it automatically.
+const bgMusic=document.getElementById('bgMusic');
+const musicToggle=document.getElementById('musicToggle');
+let musicStarted=false;
+async function startMusic(){
+  try{
+    await bgMusic.play();
+    musicStarted=true;
+    if(musicToggle) musicToggle.textContent='♫ Celebration Music Playing';
+  }catch(e){}
+}
+if(musicToggle) musicToggle.addEventListener('click',startMusic);
+['pointerdown','touchstart','keydown'].forEach(evt=>{
+  document.addEventListener(evt,()=>{if(!musicStarted) startMusic()},{once:true,passive:true});
+});
+window.addEventListener('load',startMusic);
 </script>
-<audio id="bgMusic" loop preload="auto">
+<audio id="bgMusic" loop preload="auto" autoplay>
 <source src="https://archive.org/download/khushiyan-da-wela-aya-sehra/Khushiyan%20Da%20Wela%20Aya%20Sehra.mp3" type="audio/mpeg">
 </audio>
 </body></html>
