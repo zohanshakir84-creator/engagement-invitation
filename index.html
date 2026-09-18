@@ -189,25 +189,16 @@ canvas.addEventListener('pointermove',e=>{if(!drawing)return;const r=canvas.getB
 canvas.addEventListener('pointerup',()=>drawing=false);canvas.addEventListener('pointercancel',()=>drawing=false);
 resizeScratch();window.addEventListener('resize',resizeScratch);
 
-// Celebration music: try autoplay on page load; browsers may block unmuted autoplay.
-// If blocked, the first tap/click/keypress starts it automatically.
+// Background celebration music
 const bgMusic=document.getElementById('bgMusic');
 const musicToggle=document.getElementById('musicToggle');
 let musicStarted=false;
-async function startMusic(){
-  try{
-    await bgMusic.play();
-    musicStarted=true;
-    if(musicToggle) musicToggle.textContent='♫ Celebration Music Playing';
-  }catch(e){}
-}
-if(musicToggle) musicToggle.addEventListener('click',startMusic);
-['pointerdown','touchstart','keydown'].forEach(evt=>{
-  document.addEventListener(evt,()=>{if(!musicStarted) startMusic()},{once:true,passive:true});
-});
+async function startMusic(){try{await bgMusic.play();musicStarted=true;if(musicToggle)musicToggle.textContent='♫ Celebration Music Playing';}catch(e){}}
 window.addEventListener('load',startMusic);
+document.addEventListener('click',()=>{if(!musicStarted)startMusic()},{once:true});
+document.addEventListener('touchstart',()=>{if(!musicStarted)startMusic()},{once:true,passive:true});
+document.addEventListener('keydown',()=>{if(!musicStarted)startMusic()},{once:true});
+if(musicToggle)musicToggle.addEventListener('click',startMusic);
 </script>
-<audio id="bgMusic" loop preload="auto" autoplay>
-<source src="https://archive.org/download/khushiyan-da-wela-aya-sehra/Khushiyan%20Da%20Wela%20Aya%20Sehra.mp3" type="audio/mpeg">
-</audio>
+<audio id="bgMusic" loop preload="auto" autoplay playsinline><source src="https://archive.org/download/khushiyan-da-wela-aya-sehra/Khushiyan%20Da%20Wela%20Aya%20Sehra.mp3" type="audio/mpeg"></audio>
 </body></html>
