@@ -68,10 +68,10 @@ section{padding:70px 0}.inner{padding:52px 28px;text-align:center}.heading{font-
 <div class="music-card">
 <div class="music-disc"><span>♫</span></div>
 <h2 class="music-title">Wela Khushiyan Da Aj Aa Gaya</h2>
-<div class="music-meta">NOOR JEHAN · PUNJABI WEDDING CLASSIC</div>
-<p class="lead" style="margin-top:16px">A joyful Pakistani classic to set the mood for this beautiful beginning.</p>
-<div class="btns"><a class="btn fill" target="_blank" rel="noopener" href="https://music.apple.com/au/album/khushiyan-da-wela-aya-sehra-single/1864510118">Play the celebration song ↗</a></div>
-<div class="small" style="margin-top:12px">The song is available on music services; the invitation keeps the music optional so visitors can choose when to play it.</div>
+<div class="music-meta">CELEBRATION MUSIC</div>
+<p class="lead" style="margin-top:16px">The invitation is designed to begin the celebration with music when the visitor starts the experience.</p>
+<div class="btns"><button class="btn fill" id="musicToggle" type="button">♫ Play Celebration Music</button></div>
+<div class="small" style="margin-top:12px">For browser privacy rules, sound cannot be guaranteed to start automatically with no user interaction. Tap once and the music will continue in the background while you explore.</div>
 </div></div></section>
 
 <section id="invitation"><div class="card inner">
@@ -107,10 +107,10 @@ section{padding:70px 0}.inner{padding:52px 28px;text-align:center}.heading{font-
 </div></section>
 
 <section><div class="card inner">
-<div class="eyebrow">A glimpse of togetherness</div><h2 class="heading">Celebrating Two Hearts</h2>
+<div class="eyebrow">A symbol of the promise ahead</div><h2 class="heading">Celebrating Two Hearts</h2>
 <p class="lead">A timeless, understated celebration inspired by warmth, family and the joy of beginning life’s next chapter together.</p>
 <div class="gallery" style="grid-template-columns:repeat(3,1fr)"><div class="portrait"><svg viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg"><rect width="500" height="620" fill="#e6d8c9"/><circle cx="250" cy="205" r="92" fill="#c2aa91"/><path d="M95 540c8-155 70-235 155-235s147 80 155 235" fill="#8b735f"/><path d="M155 190c5-92 180-118 206 6-47-39-130-49-206-6" fill="#5d5045"/><path d="M130 515h240v105H130z" fill="#a58b72"/></svg></div>
-<div class="portrait"><svg viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg"><rect width="500" height="620" fill="#efe5da"/><circle cx="250" cy="205" r="92" fill="#ccb49c"/><path d="M88 540c12-155 74-235 162-235s150 80 162 235" fill="#9c846e"/><path d="M145 196c12-103 185-112 211 10-60-43-143-50-211-10" fill="#746050"/><path d="M110 500c85 38 195 38 280 0v120H110z" fill="#826d5b"/></svg></div><div class="portrait ring-frame"><div class="ring-glow"></div><svg viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg"><rect width="500" height="620" fill="#f1e6d8"/><ellipse cx="250" cy="330" rx="132" ry="96" fill="none" stroke="#b28a5a" stroke-width="28"/><ellipse cx="250" cy="330" rx="96" ry="67" fill="#f1e6d8"/><path d="M205 225 L250 130 L295 225 L250 275 Z" fill="#fffaf4" stroke="#b28a5a" stroke-width="8"/><path d="M250 130 L282 195 L250 225 L218 195 Z" fill="#ffffff" opacity=".9"/><circle cx="250" cy="158" r="17" fill="#ffffff" opacity=".95"/><circle cx="210" cy="205" r="7" fill="#ffffff" opacity=".75"/><circle cx="290" cy="205" r="7" fill="#ffffff" opacity=".75"/></svg></div><div class="small" style="margin-top:18px">An artistic representation · faces intentionally left unseen · ring illustration added as a symbol of the promise ahead</div>
+<div class="portrait"><svg viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg"><rect width="500" height="620" fill="#efe5da"/><circle cx="250" cy="205" r="92" fill="#ccb49c"/><path d="M88 540c12-155 74-235 162-235s150 80 162 235" fill="#9c846e"/><path d="M145 196c12-103 185-112 211 10-60-43-143-50-211-10" fill="#746050"/><path d="M110 500c85 38 195 38 280 0v120H110z" fill="#826d5b"/></svg></div><div class="portrait ring-frame"><div class="ring-glow"></div><svg viewBox="0 0 500 620" xmlns="http://www.w3.org/2000/svg"><rect width="500" height="620" fill="#f1e6d8"/><ellipse cx="250" cy="330" rx="132" ry="96" fill="none" stroke="#b28a5a" stroke-width="28"/><ellipse cx="250" cy="330" rx="96" ry="67" fill="#f1e6d8"/><path d="M205 225 L250 130 L295 225 L250 275 Z" fill="#fffaf4" stroke="#b28a5a" stroke-width="8"/><path d="M250 130 L282 195 L250 225 L218 195 Z" fill="#ffffff" opacity=".9"/><circle cx="250" cy="158" r="17" fill="#ffffff" opacity=".95"/><circle cx="210" cy="205" r="7" fill="#ffffff" opacity=".75"/><circle cx="290" cy="205" r="7" fill="#ffffff" opacity=".75"/></svg></div><div class="small" style="margin-top:18px">An artistic representation · ring artwork · ring illustration added as a symbol of the promise ahead</div>
 </div></section>
 
 <section><div class="card inner">
@@ -190,4 +190,7 @@ canvas.addEventListener('pointermove',e=>{if(!drawing)return;const r=canvas.getB
 canvas.addEventListener('pointerup',()=>drawing=false);canvas.addEventListener('pointercancel',()=>drawing=false);
 resizeScratch();window.addEventListener('resize',resizeScratch);
 </script>
+<audio id="bgMusic" loop preload="auto">
+<source src="https://archive.org/download/khushiyan-da-wela-aya-sehra/Khushiyan%20Da%20Wela%20Aya%20Sehra.mp3" type="audio/mpeg">
+</audio>
 </body></html>
