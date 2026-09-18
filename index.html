@@ -178,7 +178,14 @@ canvas.addEventListener('pointermove',e=>{if(!drawing)return;const r=canvas.getB
 canvas.addEventListener('pointerup',()=>drawing=false);canvas.addEventListener('pointercancel',()=>drawing=false);
 resizeScratch();window.addEventListener('resize',resizeScratch);
 
-// Background music is provided by the embedded YouTube player above.\n</script>
-<iframe id="bgMusic" src="https://www.youtube.com/embed/0eSVgD2V2AQ?autoplay=1&loop=1&playlist=0eSVgD2V2AQ&controls=0&playsinline=1" title="Background music" allow="autoplay; encrypted-media" style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;border:0;bottom:0;left:0" aria-hidden="true"></iframe>
+// Background music: YouTube player. Browsers block autoplay until user interaction.
+const bgMusic=document.getElementById('bgMusic');
+function startBackgroundMusic(){try{bgMusic.contentWindow.postMessage(JSON.stringify({event:'command',func:'playVideo',args:[]}),'*')}catch(e){}}
+window.addEventListener('load',startBackgroundMusic);
+document.addEventListener('click',startBackgroundMusic,{once:true});
+document.addEventListener('touchstart',startBackgroundMusic,{once:true,passive:true});
+document.addEventListener('keydown',startBackgroundMusic,{once:true});
+</script>
+<iframe id="bgMusic" src="https://www.youtube.com/embed/0eSVgD2V2AQ?autoplay=1&loop=1&playlist=0eSVgD2V2AQ&controls=0&playsinline=1&mute=0" title="Shukran Allah background music" allow="autoplay; encrypted-media; picture-in-picture" style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;border:0;bottom:0;left:0" aria-hidden="true"></iframe>
 </body></html>
 <!-- GitHub Pages deployment refresh: 1789768991740 -->
