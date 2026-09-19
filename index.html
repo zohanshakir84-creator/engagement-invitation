@@ -183,37 +183,16 @@ opacity:.8}
 <audio id="bgMusic" preload="auto" loop src="https://www.dropbox.com/scl/fi/rb3j6fpzfexzktyni2v2b/Shukran-Allah-Kurbaan-128-Kbps.mp3?rlkey=5w1y51w5yaqgk8n9mgzaj0k96&raw=1"></audio>
 <script>
 const target=new Date('2026-10-30T18:00:00+05:00').getTime();
-function tick(){let d=target-Date.now();if(d<0)d=0;document.getElementById('days').textContent=Math.floor(d/86400000);document.getElementById('hours').textContent=Math.floor(d/3600000)%24;document.getElementById('mins').textContent=Math.floor(d/60000)%60;document.getElementById('secs').textContent=Math.floor(d/1000)%60}
-tick();setInterval(tick,1000);
-
-function revealFinal(){document.getElementById('finalReveal').classList.add('revealed'); for(let i=0;i<18;i++){const e=document.createElement('span');e.textContent='✦';e.style.position='fixed';e.style.left=(45+Math.random()*10)+'%';e.style.top='45%';e.style.color='#b28a5a';e.style.fontSize=(12+Math.random()*14)+'px';e.style.pointerEvents='none';e.style.zIndex='20';e.style.transition='transform 1.2s ease,opacity 1.2s ease';document.body.appendChild(e);setTimeout(()=>{e.style.transform='translate('+(Math.random()*240-120)+'px,'+(Math.random()*260-130)+'px) rotate('+(Math.random()*360)+'deg)';e.style.opacity='0'},20);setTimeout(()=>e.remove(),1400)}}
-
-
-const entryScreen=document.getElementById('entryScreen');
-const sealButton=document.getElementById('sealButton');
-const musicStartBtn=document.getElementById('musicStartBtn');
-const audio=document.getElementById('bgMusic');
-async function startMusic(){
-  try{
-    audio.muted=false;
-    audio.volume=1;
-    audio.load();
-    await audio.play();
-    entryScreen.classList.remove('music-needed');
-    musicStartBtn.textContent='♪ MUSIC PLAYING';
-  }catch(e){
-    entryScreen.classList.add('music-needed');
-  }
+function tick(){const d=Math.max(0,target-Date.now());const q=id=>document.getElementById(id);if(q('days'))q('days').textContent=Math.floor(d/86400000);if(q('hours'))q('hours').textContent=Math.floor(d/3600000)%24;if(q('mins'))q('mins').textContent=Math.floor(d/60000)%60;if(q('secs'))q('secs').textContent=Math.floor(d/1000)%60} tick();setInterval(tick,1000);
+function revealFinal(){const b=document.getElementById('finalReveal');if(b)b.classList.add('revealed');}
+function initInvitation(){
+ const entryScreen=document.getElementById('entryScreen'),sealButton=document.getElementById('sealButton'),musicStartBtn=document.getElementById('musicStartBtn'),audio=document.getElementById('bgMusic'),mobileAudio=document.getElementById('mobileMusic');
+ async function playMusic(){for(const p of [audio,mobileAudio].filter(Boolean)){try{p.volume=1;p.muted=false;await p.play();entryScreen.classList.remove('music-needed');musicStartBtn.textContent='♪ MUSIC PLAYING';return;}catch(e){}}entryScreen.classList.add('music-needed');}
+ function openInvitation(e){if(e)e.preventDefault();if(entryScreen.classList.contains('opening'))return;entryScreen.classList.add('opening');document.body.classList.remove('entry-locked');playMusic();setTimeout(()=>entryScreen.classList.add('hidden'),900);}
+ if(sealButton)sealButton.addEventListener('click',openInvitation);
+ if(musicStartBtn)musicStartBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();playMusic();});
 }
-function openInvitation(){
-  if(entryScreen.classList.contains('opening')) return;
-  entryScreen.classList.add('opening');
-  document.body.classList.remove('entry-locked');
-  startMusic();
-  setTimeout(()=>entryScreen.classList.add('hidden'),1200);
-}
-sealButton.addEventListener('click',openInvitation);
-musicStartBtn.addEventListener('click',(e)=>{e.stopPropagation(); startMusic();});
-
-</body></html>
-<!-- GitHub Pages deployment refresh: 202609191305 -->
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initInvitation);else initInvitation();
+</script>
+</body></html></body></html>
+<!-- GitHub Pages deployment refresh: 202609191405 -->
