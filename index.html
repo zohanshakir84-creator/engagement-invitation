@@ -99,9 +99,20 @@ opacity:.8}
 </div></header>
 
 <section id="invitation"><div class="card inner">
-<div class="eyebrow">The moment has arrived</div><div class="script-title">The Secret Is Revealed</div>
-<h2 class="heading">Meet the Couple</h2>
-<div class="reveal-box revealed" style="margin-top:24px"><div class="reveal-text" style="display:block;font-size:30px;color:#9b784e"><strong>Muhammad Sufyan Shakir</strong><br><span style="font-family:'Great Vibes',cursive;font-size:46px">&amp;</span><br><strong>Rukhsar Arshad</strong></div></div>
+<div class="eyebrow">The moment has arrived</div><div class="script-title">A Secret Waiting to Be Revealed</div>
+<h2 class="heading">Scratch to Reveal the Couple</h2>
+<p class="lead">Use your finger on your phone or your mouse on desktop to uncover the names.</p>
+<div class="scratch-wrap">
+<div class="scratch-card" id="coupleScratch">
+<div class="scratch-under">
+<div class="eyebrow">The Couple</div>
+<div class="secret-date"><strong>Muhammad Sufyan Shakir</strong><br><span style="font-family:'Great Vibes',cursive;font-size:46px">&amp;</span><br><strong>Rukhsar Arshad</strong></div>
+<div class="secret-note">A BEAUTIFUL NEW BEGINNING</div>
+</div>
+<canvas id="scratchCanvas"></canvas>
+</div>
+<div class="scratch-hint">✦ SCRATCH THE GOLDEN COVER TO REVEAL ✦</div>
+</div>
 </div></section>
 
 <section id="story-before"><div class="card inner">
@@ -192,6 +203,25 @@ opacity:.8}
 const target=new Date('2026-10-30T18:00:00+05:00').getTime();
 function tick(){const d=Math.max(0,target-Date.now());const q=id=>document.getElementById(id);if(q('days'))q('days').textContent=Math.floor(d/86400000);if(q('hours'))q('hours').textContent=Math.floor(d/3600000)%24;if(q('mins'))q('mins').textContent=Math.floor(d/60000)%60;if(q('secs'))q('secs').textContent=Math.floor(d/1000)%60} tick();setInterval(tick,1000);
 function revealFinal(){const b=document.getElementById('finalReveal');if(b)b.classList.add('revealed');}
+function initScratchReveal(){
+ const canvas=document.getElementById('scratchCanvas'),card=document.getElementById('coupleScratch');
+ if(!canvas||!card)return;
+ const ctx=canvas.getContext('2d'),dpr=Math.max(1,window.devicePixelRatio||1);
+ function resize(){
+   const r=card.getBoundingClientRect(); canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.height*dpr);
+   canvas.style.width=r.width+'px';canvas.style.height=r.height+'px';ctx.setTransform(dpr,0,0,dpr,0,0);
+   ctx.globalCompositeOperation='source-over';
+   const g=ctx.createLinearGradient(0,0,r.width,r.height);g.addColorStop(0,'#c9a66b');g.addColorStop(.5,'#e6c997');g.addColorStop(1,'#b28a5a');
+   ctx.fillStyle=g;ctx.fillRect(0,0,r.width,r.height);
+   ctx.fillStyle='rgba(255,250,244,.28)';ctx.font='500 13px Montserrat,sans-serif';ctx.textAlign='center';ctx.fillText('SCRATCH HERE ✦',r.width/2,r.height/2);
+ }
+ resize();window.addEventListener('resize',resize);
+ let down=false;
+ function point(e){const r=canvas.getBoundingClientRect(),p=e.touches?e.touches[0]:e;return{x:p.clientX-r.left,y:p.clientY-r.top};}
+ function scratch(e){if(!down)return;e.preventDefault();const p=point(e);ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(p.x,p.y,28,0,Math.PI*2);ctx.fill();}
+ canvas.addEventListener('pointerdown',e=>{down=true;scratch(e)});canvas.addEventListener('pointermove',scratch);window.addEventListener('pointerup',()=>down=false);
+ canvas.addEventListener('touchstart',e=>{down=true;scratch(e)},{passive:false});canvas.addEventListener('touchmove',scratch,{passive:false});canvas.addEventListener('touchend',()=>down=false);
+}
 function initInvitation(){
  const entryScreen=document.getElementById('entryScreen'),sealButton=document.getElementById('sealButton'),musicStartBtn=document.getElementById('musicStartBtn'),audio=document.getElementById('bgMusic'),mobileAudio=document.getElementById('mobileMusic');
  async function playMusic(){for(const p of [audio,mobileAudio].filter(Boolean)){try{p.volume=1;p.muted=false;await p.play();entryScreen.classList.remove('music-needed');musicStartBtn.textContent='♪ MUSIC PLAYING';return;}catch(e){}}entryScreen.classList.add('music-needed');}
@@ -199,6 +229,7 @@ function initInvitation(){
  if(sealButton)sealButton.addEventListener('click',openInvitation);
  if(musicStartBtn)musicStartBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();playMusic();});
 }
+initScratchReveal();
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initInvitation);else initInvitation();
 </script>
 </body></html></body></html>
