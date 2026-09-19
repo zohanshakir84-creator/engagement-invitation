@@ -190,11 +190,21 @@ function openInvitation(){
   entryScreen.classList.add('opening');
   document.body.classList.remove('entry-locked');
   setTimeout(()=>entryScreen.classList.add('hidden'),1200);
-  // The uploaded song can be connected here once a public MP3 URL is available.
-  try{const audio=document.getElementById('bgMusic'); if(audio.src) audio.play().catch(()=>{});}catch(e){}
+  try{
+    const audio=document.getElementById('bgMusic');
+    audio.load();
+    const playPromise=audio.play();
+    if(playPromise) playPromise.catch(()=>{
+      const hint=document.createElement('div');
+      hint.textContent='TAP HERE TO PLAY MUSIC ♪';
+      hint.style.cssText='position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:2000;background:#3c342e;color:#fffaf4;padding:13px 20px;border-radius:30px;font:500 10px Montserrat,sans-serif;letter-spacing:2px;box-shadow:0 8px 25px rgba(0,0,0,.2);cursor:pointer';
+      hint.onclick=()=>{audio.play().then(()=>hint.remove()).catch(()=>{});};
+      document.body.appendChild(hint);
+    });
+  }catch(e){}
 }
 sealButton.addEventListener('click',openInvitation);
 </script>
-<audio id="bgMusic" preload="auto" loop src="https://www.dropbox.com/scl/fi/rb3j6fpzfexzktyni2v2b/Shukran-Allah-Kurbaan-128-Kbps.mp3?rlkey=5w1y51w5yaqgk8n9mgzaj0k96&raw=1"></audio>
+<audio id="bgMusic" preload="auto" loop src="https://dl.dropbox.com/scl/fi/rb3j6fpzfexzktyni2v2b/Shukran-Allah-Kurbaan-128-Kbps.mp3?rlkey=5w1y51w5yaqgk8n9mgzaj0k96&raw=1"></audio>
 </body></html>
 <!-- GitHub Pages deployment refresh: 202609191200 -->
