@@ -78,9 +78,13 @@ opacity:.8}
 .entry-screen.opening .seal{opacity:0;transform:translate(-50%,-50%) scale(.7);transition:opacity .35s,transform .45s}
 .entry-screen.opening .envelope{transform:translateY(-8px) scale(1.015)}
 @media(max-width:650px){.envelope-wrap{width:84vw;height:126vw;max-height:76vh}.seal{width:82px;height:82px}.seal span{font-size:29px}.entry-copy h2{font-size:34px}}
+
+.music-start-btn{position:absolute;left:50%;bottom:-92px;transform:translateX(-50%);z-index:20;display:none;border:1px solid #b99668;background:#3c342e;color:#fffaf4;border-radius:50px;padding:14px 22px;font:500 10px Montserrat,sans-serif;letter-spacing:2px;white-space:nowrap;box-shadow:0 8px 25px rgba(0,0,0,.18);cursor:pointer}
+.entry-screen.music-needed .music-start-btn{display:block}
+@media(max-width:650px){.music-start-btn{bottom:-84px}}
 </style>
 </head>
-<body class="entry-locked" data-deploy-stamp="2026-09-19T12:00:00Z"><div class="entry-screen" id="entryScreen"><div class="entry-backdrop"></div><div class="envelope-wrap"><div class="envelope"><div class="envelope-flap"></div><div class="envelope-body"></div><div class="envelope-ornament">✦ ❦ ✦<br><span style="font-size:13px;letter-spacing:8px">MUHAMMAD SUFYAN &amp; RUKHSAR ARSHAD</span><br>✦ ❦ ✦</div><button class="seal" id="sealButton" aria-label="Open invitation"><span>S &amp; R</span></button><div class="entry-copy"><div class="eyebrow">A special invitation</div><h2>Our Engagement</h2><p>30 OCTOBER 2026 · SIALKOT</p></div></div><div class="entry-hint">TAP THE SEAL TO OPEN</div></div></div><div class="petals" aria-hidden="true"><span class="petal p1">✦</span><span class="petal p2">❦</span><span class="petal p3">✦</span><span class="petal p4">❦</span></div><div class="petals" aria-hidden="true"><span class="petal p1">✦</span><span class="petal p2">❦</span><span class="petal p3">✦</span><span class="petal p4">❦</span></div>
+<body class="entry-locked" data-deploy-stamp="2026-09-19T12:00:00Z"><div class="entry-screen" id="entryScreen"><div class="entry-backdrop"></div><div class="envelope-wrap"><div class="envelope"><div class="envelope-flap"></div><div class="envelope-body"></div><div class="envelope-ornament">✦ ❦ ✦<br><span style="font-size:13px;letter-spacing:8px">MUHAMMAD SUFYAN &amp; RUKHSAR ARSHAD</span><br>✦ ❦ ✦</div><button class="seal" id="sealButton" aria-label="Open invitation and play music"><span>S &amp; R</span></button><button class="music-start-btn" id="musicStartBtn" type="button">♪ TAP TO PLAY MUSIC</button><div class="entry-copy"><div class="eyebrow">A special invitation</div><h2>Our Engagement</h2><p>30 OCTOBER 2026 · SIALKOT</p></div></div><div class="entry-hint">TAP THE SEAL TO OPEN</div></div></div><div class="petals" aria-hidden="true"><span class="petal p1">✦</span><span class="petal p2">❦</span><span class="petal p3">✦</span><span class="petal p4">❦</span></div><div class="petals" aria-hidden="true"><span class="petal p1">✦</span><span class="petal p2">❦</span><span class="petal p3">✦</span><span class="petal p4">❦</span></div>
 <div class="page">
 <header class="hero" id="home"><div class="card">
 <div class="flower f1">❧</div><div class="flower f2">❧</div>
@@ -185,25 +189,29 @@ function revealFinal(){document.getElementById('finalReveal').classList.add('rev
 
 const entryScreen=document.getElementById('entryScreen');
 const sealButton=document.getElementById('sealButton');
+const musicStartBtn=document.getElementById('musicStartBtn');
+const audio=document.getElementById('bgMusic');
+async function startMusic(){
+  try{
+    audio.muted=false;
+    audio.volume=1;
+    audio.load();
+    await audio.play();
+    entryScreen.classList.remove('music-needed');
+    musicStartBtn.textContent='♪ MUSIC PLAYING';
+  }catch(e){
+    entryScreen.classList.add('music-needed');
+  }
+}
 function openInvitation(){
   if(entryScreen.classList.contains('opening')) return;
   entryScreen.classList.add('opening');
   document.body.classList.remove('entry-locked');
+  startMusic();
   setTimeout(()=>entryScreen.classList.add('hidden'),1200);
-  try{
-    const audio=document.getElementById('bgMusic');
-    audio.load();
-    const playPromise=audio.play();
-    if(playPromise) playPromise.catch(()=>{
-      const hint=document.createElement('div');
-      hint.textContent='TAP HERE TO PLAY MUSIC ♪';
-      hint.style.cssText='position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:2000;background:#3c342e;color:#fffaf4;padding:13px 20px;border-radius:30px;font:500 10px Montserrat,sans-serif;letter-spacing:2px;box-shadow:0 8px 25px rgba(0,0,0,.2);cursor:pointer';
-      hint.onclick=()=>{audio.play().then(()=>hint.remove()).catch(()=>{});};
-      document.body.appendChild(hint);
-    });
-  }catch(e){}
 }
 sealButton.addEventListener('click',openInvitation);
+musicStartBtn.addEventListener('click',(e)=>{e.stopPropagation(); startMusic();});
 </script>
 <audio id="bgMusic" preload="auto" loop src="https://dl.dropbox.com/scl/fi/rb3j6fpzfexzktyni2v2b/Shukran-Allah-Kurbaan-128-Kbps.mp3?rlkey=5w1y51w5yaqgk8n9mgzaj0k96&raw=1"></audio>
 </body></html>
